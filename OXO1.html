@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Крестики-нолики</title>
+  <meta charset="UTF-8">
+  <style>
+    .row div {
+      padding: 10px;
+      border: 3px solid rgb(0, 255, 0);
+      height: 200px;
+      width: 200px;
+      float: left;
+      background-color: rgb(0, 47, 255);
+    }
+    .row {
+      clear: both;
+    }
+    .meta {
+        text-align: center;
+        color: rgb(255, 0, 0);
+        font-size: 1000%;
+        width: fit-content;
+        margin: 0 auto;
+    }
+    body {
+        background-color: rgb(255, 0, 0);
+    }
+    p {
+        text-align: center;
+    }
+
+    #prize {
+        position: fixed;
+        z-index: 2;
+        top: 0px;
+        left: calc(50% - 400px);
+        display: none;
+    }
+    #prize img {
+        width: 800px;
+    }
+       
+    
+  </style>
+  </head>
+<body>
+ <p>
+    Нажми чтобы играть в крестики-нолики.
+ </p>
+ <div class="meta">
+    <div class="row">
+      <div id="0_0" onclick="place(this)"></div>
+      <div id="1_0" onclick="place(this)"></div>
+      <div id="2_0" onclick="place(this)"></div>
+    </div>
+    <div class="row">
+      <div id="0_1" onclick="place(this)"></div>
+      <div id="1_1" onclick="place(this)"></div>
+      <div id="2_1"onclick="place(this)"></div>
+    </div>
+    <div class="row">
+      <div id="0_2" onclick="place(this)"></div>
+      <div id="1_2" onclick="place(this)"></div>
+      <div id="2_2" onclick="place(this)"></div>
+    </div>
+ </div>
+
+ <div id="prize">
+     <img src="https://lh3.googleusercontent.com/proxy/KW3f0EkSouwwWG37fwXbiBIkzvZx0_dErYomjGqKzSsXuu2DNH4omMTWNfLE3Rxxe8HoPcYpPStmPRPs-9E8dSat5hKBUGDGmXFMZAwqfqKMPA" />
+ </div>
+  
+  <script>
+    var currentPlayer = "O";
+    var won = false;
+    function place(box) {
+      if(box.innerText != "" || won) return;
+      box.innerText = currentPlayer;
+      currentPlayer == "O" ? currentPlayer = "X" : currentPlayer = "O";
+      checkGameBoard();   
+    }
+    function checkGameBoard() {
+      for(var i = 0; i <= 2; i++) {
+        checkWinner(document.getElementById(i + "_0").innerText,
+          document.getElementById(i + "_1").innerText,
+          document.getElementById(i + "_2").innerText);
+        checkWinner(document.getElementById("0_" + i).innerText,
+          document.getElementById("1_" + i).innerText,
+          document.getElementById("2_" + i).innerText);
+      }
+      checkWinner(document.getElementById("0_0").innerText,
+        document.getElementById("1_1").innerText,
+        document.getElementById("2_2").innerText);
+      checkWinner(document.getElementById("0_2").innerText,
+        document.getElementById("1_1").innerText,
+        document.getElementById("2_0").innerText);
+    }
+    function checkWinner(first, second, third) {
+      if(first != "" && first == second && first == third) {
+        document.getElementById('prize').style.display = 'block';
+        //alert("Победитель!");
+        won = true;
+      }
+    }
+  </script>
+</body>
+</html>
